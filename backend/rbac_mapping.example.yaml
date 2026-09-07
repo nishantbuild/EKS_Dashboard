@@ -1,0 +1,57 @@
+# Maps an identity's group(s) to what it may see/do in the dashboard.
+# "group" must match a group name/claim returned by your OIDC provider
+# (for AWS IAM Identity Center this is typically the `groups` claim),
+# or, for dev-login users, the third field in DEV_USERS.
+#
+# namespaces: "*" means all namespaces.
+# actions: subset of
+#   list_namespaces, list_pods, describe_pod, get_pod_logs, delete_pod,
+#   list_deployments, describe_deployment, scale_deployment, restart_deployment,
+#   list_services, list_events, exec_pod, view_metrics
+#
+# exec_pod opens an interactive shell inside the pod (like `kubectl exec -it`)
+# — treat it like granting shell access and restrict it accordingly.
+
+admins:
+  namespaces: "*"
+  actions:
+    - list_namespaces
+    - list_pods
+    - describe_pod
+    - get_pod_logs
+    - delete_pod
+    - list_deployments
+    - describe_deployment
+    - scale_deployment
+    - restart_deployment
+    - list_services
+    - list_events
+    - exec_pod
+    - view_metrics
+
+developers:
+  namespaces:
+    - default
+    - staging
+  actions:
+    - list_namespaces
+    - list_pods
+    - describe_pod
+    - get_pod_logs
+    - list_deployments
+    - describe_deployment
+    - list_services
+    - list_events
+    - view_metrics
+
+readonly:
+  namespaces: "*"
+  actions:
+    - list_namespaces
+    - list_pods
+    - describe_pod
+    - get_pod_logs
+    - list_deployments
+    - list_services
+    - list_events
+    - view_metrics
